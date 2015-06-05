@@ -6,7 +6,7 @@ var Todo = function (options) {
 
 };
 
-//Task List
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~ Incomplete Task List ~~~~~~~~~~~~~~~~~~~~~~~~~~
 var openStorageBin = [];
 
 // Set up submit
@@ -29,9 +29,11 @@ $('#addTask').on('submit', function(event) {
 
 });
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~ Completed Task List ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 var closedStorageBin = [];
 
-// Toogle tasks
+// Toggle tasks
 $('#opentasks').on('click', 'li', function(event) {
 
   // grab task that was clicked on
@@ -39,19 +41,39 @@ $('#opentasks').on('click', 'li', function(event) {
 
   $(this).toggle('complete');
 
-  var tTask = $(this).text();
+  var cTask = $(this).text();
 
-  var taskToEdit = _.find(openStorageBin, { task: tTask });
+  var taskToClose = _.find(openStorageBin, { task: cTask });
 
-  taskToEdit.status = 'Closed';
+  taskToClose.status = 'Closed';
 
   // Store for later
-  closedStorageBin.push(taskToEdit);
+  closedStorageBin.push(taskToClose);
 
   // Display on page
-  $('#closedtasks').append('<li class="complete"><input type="checkbox" checked>' + tTask + '</li>');
+  $('#closedtasks').append('<li class="complete"><input type="checkbox" checked>' + cTask + '</li>');
 
 
-  console.log(taskToEdit);
+  console.log(taskToClose);
+
+});
+
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~ Toggle Incomplete/Completed ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+$('#closedtasks').on('click', 'li', function () {
+  // var $checkbox = $(this).find(':checkbox');
+  // $checkbox.attr('checked', !$checkbox.attr('checked'));
+  $(this).removeClass('complete');
+
+  // var tTask = $(this).text();
+
+  // var taskToEdit = _.find(openStorageBin, { task: tTask });
+
+  // taskToEdit.status = 'Open';
+
+  // closedStorageBin
+
+  // openStorageBin.push(taskToEdit);
 
 });
