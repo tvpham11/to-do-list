@@ -50,9 +50,11 @@ $('#opentasks').on('click', 'li', function(event) {
   // Store for later
   closedStorageBin.push(taskToClose);
 
+  // Remove from openStorageBin
+  openStorageBin.splice($.inArray(taskToClose, openStorageBin),1);
+
   // Display on page
   $('#closedtasks').append('<li class="complete"><input type="checkbox" checked>' + cTask + '</li>');
-
 
   console.log(taskToClose);
 
