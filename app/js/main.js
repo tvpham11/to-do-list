@@ -27,6 +27,11 @@ $('#addTask').on('submit', function(event) {
   // Reset form
   this.reset();
 
+  // Open task count
+  if (openStorageBin.length > 0) {
+    $('#opencount').html('Number of open tasks: ' + openStorageBin.length);
+  }
+
 });
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~ Completed Task List ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -58,24 +63,45 @@ $('#opentasks').on('click', 'li', function(event) {
 
   console.log(taskToClose);
 
-});
+  // Closed task count
+  if (closedStorageBin.length > 0) {
+    $('#closedcount').html('Number of completed tasks: ' + closedStorageBin.length);
+  }
 
+});
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~ Toggle Incomplete/Completed ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 $('#closedtasks').on('click', 'li', function () {
-  // var $checkbox = $(this).find(':checkbox');
-  // $checkbox.attr('checked', !$checkbox.attr('checked'));
-  $(this).removeClass('complete');
+  $(this).toggleClass('complete');
 
-  // var tTask = $(this).text();
+  var tTask = $(this).text();
 
-  // var taskToEdit = _.find(openStorageBin, { task: tTask });
+  var taskToEdit = _.find(closedStorageBin, { task: tTask });
 
-  // taskToEdit.status = 'Open';
+  taskToEdit.status = 'Open';
 
-  // closedStorageBin
+  // Store for later
+  openStorageBin.push(taskToEdit);
 
-  // openStorageBin.push(taskToEdit);
+  // Remove from closedStorageBin
+  closedStorageBin.splice($.inArray(taskToEdit, closedStorageBin),1);
+  $(this).remove();
+
+  // Update closed task count
+  if (closedStorageBin.length > 0) {
+    $('#closedcount').html('Number of completed tasks: ' + closedStorageBin.length);
+  }
+  else {
+    $('#closedcount').remove();
+  }
+
+  // Display on page
+  $('#opentasks').append('<li><input type="checkbox">' + tTask + '</li>');
+
+  // Update ppen task count
+  if (openStorageBin.length > 0) {
+    $('#opencount').html('Number of open tasks: ' + openStorageBin.length);
+  }
 
 });
