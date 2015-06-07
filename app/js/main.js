@@ -21,7 +21,8 @@ $('#addTask').on('submit', function(event) {
   openStorageBin.push(taskInstance);
 
   // Display on page
-  $('#opentasks').append('<li><input type="checkbox">' + taskText + '</li>');
+  var opentaskhtml = '<li class="taskli"><div class="taskitem" id="opentask"><input type="checkbox">' + taskText + '</div><a href="#" class="deletebtn"><i class="fa fa-trash-o"></i></a></li>';
+  $('#opentasks').append(opentaskhtml);
 
 
   // Reset form
@@ -39,12 +40,13 @@ $('#addTask').on('submit', function(event) {
 var closedStorageBin = [];
 
 // Toggle tasks
-$('#opentasks').on('click', 'li', function(event) {
+$('#opentasks').on('click', 'div', function(event) {
 
   // grab task that was clicked on
   // mark task as completed
 
   $(this).toggle('complete');
+  $(this).next('.deletebtn').remove();
 
   var cTask = $(this).text();
 
@@ -58,8 +60,16 @@ $('#opentasks').on('click', 'li', function(event) {
   // Remove from openStorageBin
   openStorageBin.splice($.inArray(taskToClose, openStorageBin),1);
 
+    // Update open task count
+  if (openStorageBin.length > 0) {
+    $('#opencount').html('Number of open tasks: ' + openStorageBin.length);
+  } else {
+    $('#opencount').remove();
+  }
+
   // Display on page
-  $('#closedtasks').append('<li class="complete"><input type="checkbox" checked>' + cTask + '</li>');
+  var closedtaskhtml = '<li class="taskli"><div class="taskitem" id="closedtask"><input type="checkbox" checked>'+ cTask + '</div><a href="#" class="deletebtn"><i class="fa fa-trash-o"></i></a></li>';
+  $('#closedtasks').append(closedtaskhtml);
 
   console.log(taskToClose);
 
@@ -72,8 +82,9 @@ $('#opentasks').on('click', 'li', function(event) {
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~ Toggle Incomplete/Completed ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-$('#closedtasks').on('click', 'li', function () {
+$('#closedtasks').on('click', 'div', function () {
   $(this).toggleClass('complete');
+  $(this).next('.deletebtn').remove();
 
   var tTask = $(this).text();
 
@@ -97,11 +108,17 @@ $('#closedtasks').on('click', 'li', function () {
   }
 
   // Display on page
-  $('#opentasks').append('<li><input type="checkbox">' + tTask + '</li>');
+  var reopentaskhtml = '<li class="taskli"><div class="taskitem" id="opentask"><input type="checkbox">' + tTask + '</div><a href="#" class="deletebtn"><i class="fa fa-trash-o"></i></a></li>';
+  $('#opentasks').append(reopentaskhtml);
 
-  // Update ppen task count
+  // Update open task count
   if (openStorageBin.length > 0) {
     $('#opencount').html('Number of open tasks: ' + openStorageBin.length);
   }
 
+});
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~ Delete tasks ~~~~~~~~~~~~~~~~~~~~~~~~~~
+$('#deletebtn').click(function () {
+  $(this).prev().remove();
 });
