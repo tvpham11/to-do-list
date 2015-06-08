@@ -6,6 +6,8 @@ var Todo = function (options) {
 
   this.task = args.task;
   this.status = 'Open';
+  this.id = _.random(200, 6000); // Added with Tim on Mon., Jun 8 - Idea is to have
+                                 // unique ID for each task
 };
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~ Functions ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -27,6 +29,19 @@ function deleteTask (delbtn, storagebin, task, taskcountfunc, ulID, status) {
   });
 }
 
+/*
+Tim's solution:
+$('#removeTask').on('click', function(event) {
+  event.preventDefault();
+
+  taskBin.forEach(function(t){
+    if (t.status !== 'Open') {
+    taskBin = _.without(taskBin, t);
+    $('#' + t.id).remove();
+    }
+  });
+});
+*/
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~ Task arrays ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 var openStorageBin = [];
@@ -46,11 +61,10 @@ $('#addTask').on('submit', function (event) {
   openStorageBin.push(taskInstance);
 
   // Display on page
-  var opentaskhtml = '<li class="taskli"><div class="taskitem" id="opentask">' +
+  var opentaskhtml = '<li class="taskli" id="' + taskInstance.id + '"><div class="taskitem" id="opentask">' +
   '<input type="checkbox">' + taskText + '</div><div class="deletebtn" id="deleteopen"><a href="#">' +
   '<i class="fa fa-trash-o"></i></a></li>';
   $('#opentasks').append(opentaskhtml);
-
 
   // Reset form
   this.reset();
@@ -72,9 +86,11 @@ $('#opentasks').on('click', 'li', function(event) {
   $(this).toggle('complete');
   $(this).next('.deletebtn').remove();
 
-  var cTask = $(this).text();
+  // var cTask = $(this).text(); // Commented due to using ID random number instead of text
 
-  var taskToClose = _.find(openStorageBin, { task: cTask });
+  var taskID = $(this).attr('id'); // Added with Tim
+  // var taskToClose = _.find(openStorageBin, { task: cTask }); // See line 76
+  var taskToClose = _.find(openStorageBin, { id: Number(taskID) }); // Added with Tim
 
   taskToClose.status = 'Closed';
 
@@ -129,8 +145,8 @@ $('#closedtasks').on('click', 'li', function (event) {
 
   // Display on page
   var reopentaskhtml = '<li class="taskli"><div class="taskitem" id="opentask">' +
-  '<input type="checkbox">' + tTask + '</div><div class="deletebtn" id="deleteopen"><a href="#">' +
-  '<i class="fa fa-trash-o"></i></a></div></li>';
+  '<input type="checkbox">' + tTask + '</div><div class="deletebtn" id="deleteopen">' +
+  '<a href="#"><i class="fa fa-trash-o"></i></a></div></li>';
   $('#opentasks').append(reopentaskhtml);
 
   // Delete re-opened task
