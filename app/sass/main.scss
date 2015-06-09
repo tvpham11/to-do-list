@@ -8,30 +8,31 @@ body {
 .container {
   width: 50%;
   margin: auto;
-}
 
-#addTask {
-  margin-top: 150px;
-}
+  #addTask {
+    margin-top: 150px;
+  }
 
-#taskText {
-  width: 400px
-}
+  #taskText {
+    width: 400px
+  }
 
-.deletebtn {
-  margin-left: 10px;
-}
+  .deletebtn {
+    margin-left: 10px;
+  }
 
-.fa {
-  color: grey;
-}
+  .fa {
+    color: grey;
+  }
 
-.fa:hover {
-  color: lightgrey;
-}
+  .fa:hover {
+    color: lightgrey;
+  }
 
-.complete {
-  text-decoration: line-through;
+  #closedtask {
+    text-decoration: line-through;
+    color: darkgrey;
+  }
 }
 
 li {

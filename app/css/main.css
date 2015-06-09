@@ -7,24 +7,19 @@ body {
 .container {
   width: 50%;
   margin: auto; }
-
-#addTask {
-  margin-top: 150px; }
-
-#taskText {
-  width: 400px; }
-
-.deletebtn {
-  margin-left: 10px; }
-
-.fa {
-  color: grey; }
-
-.fa:hover {
-  color: lightgrey; }
-
-.complete {
-  text-decoration: line-through; }
+  .container #addTask {
+    margin-top: 150px; }
+  .container #taskText {
+    width: 400px; }
+  .container .deletebtn {
+    margin-left: 10px; }
+  .container .fa {
+    color: grey; }
+  .container .fa:hover {
+    color: lightgrey; }
+  .container #closedtask {
+    text-decoration: line-through;
+    color: darkgrey; }
 
 li {
   list-style: none; }
