@@ -1,5 +1,5 @@
-// (function() {
-// 'use strict';
+(function() {
+'use strict';
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~ Task constructor & prototype ~~~~~~~~~~~~~~~~~~~~~~~~~~
 var Task = function (options) {
@@ -157,4 +157,4 @@ $('#removeTask').on('click', function(event) {
   });
 });
 */
-// });
+});
