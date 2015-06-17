@@ -1,6 +1,6 @@
 ## Welcome to My Repo
 
-> Simple to-do list
+> Simple to-do list. Deployed app: http://development.tvp-tiy-to-do-list.divshot.io/
 
 
 ## Usage
